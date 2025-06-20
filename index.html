@@ -1,0 +1,1241 @@
+<script>
+        // Demo conversation scripts
+        const scenarios = {
+            reactivation: {
+                contact: "Sarah Chen",
+                subtitle: "Past Client",
+                messages: [
+                    { type: 'ai', text: "Hey Sarah — totally random, but we've got 3 buyers at the moment looking for a place like yours around Jasper Rd. One actually missed out on a nearly identical home last week.", delay: 2500 },
+                    { type: 'ai', text: "Just wondering… is selling still on your radar at all, or off the table for now?", delay: 2000 },
+                    { type: 'lead', text: "Tbh, haven't really thought much about it. Market feels a bit all over the place.", delay: 3000 },
+                    { type: 'ai', text: "That's fair — it's definitely been up and down. That said, Jasper's actually been moving again the past month. Median price is up just over 3%, and we've seen a few go under offer in under 3 weeks.", delay: 3500 },
+                    { type: 'ai', text: "If it helps, we could do a super quick walkthrough and give you an updated price — no commitments, just good info.", delay: 2500 },
+                    { type: 'lead', text: "I just don't want to deal with opens and people traipsing through the house again…", delay: 3000 },
+                    { type: 'ai', text: "Totally get that. Actually, we've helped a few owners go off-market recently — no opens, no boards. Just matched them to buyers from our active list.", delay: 3000 },
+                    { type: 'ai', text: "Could be worth seeing if any of the current buyers are a fit for yours. Want me to pencil in a quick walkthrough? Takes 15 mins.", delay: 2500 },
+                    { type: 'lead', text: "Alright, what days work?", delay: 2000 },
+                    { type: 'ai', text: "Love it. We've got Thursday 5:30 or Saturday 10am free. Want to lock in Saturday?", delay: 2000 },
+                    { type: 'lead', text: "Let's do Saturday.", delay: 1500 },
+                    { type: 'ai', text: "Perfect. You're all set for Saturday 10am with our team. We'll bring updated sales data + buyer match profiles so you can see if it's worth acting now or holding.", delay: 3000 },
+                    { type: 'ai', text: "Chat soon! 🏠", delay: 1500 }
+                ]
+            },
+            market: {
+                contact: "James Wilson",
+                subtitle: "New Enquiry",
+                messages: [
+                    { type: 'lead', text: "Hey, just curious — is it a good time to sell in Bentleigh East?", delay: 2000 },
+                    { type: 'ai', text: "Hey James — good question. Things have actually picked up lately. We've had 6 homes go under offer in the last month, and prices are creeping back up — about 2.8% since Feb.", delay: 3500 },
+                    { type: 'ai', text: "Also seeing less days on market, especially for 3-bed homes. Yours would slot right into that demand pocket.", delay: 2500 },
+                    { type: 'lead', text: "Still feels risky with rates and everything…", delay: 2500 },
+                    { type: 'ai', text: "100% fair. A lot of owners are cautious. That's why we've been doing more low-key 'quiet campaigns' — basically pre-qualified buyers only, no public opens, just a few direct walkthroughs.", delay: 3500 },
+                    { type: 'ai', text: "We had a Wickham Rd home go under that exact setup last week — matched to a buyer in 6 days.", delay: 2500 },
+                    { type: 'lead', text: "Interesting… how would I even start something like that?", delay: 2500 },
+                    { type: 'ai', text: "First step's easy — we do a quick walkthrough to get a feel for condition, updates, etc., then give you a custom price guide + buyer interest snapshot.", delay: 3000 },
+                    { type: 'ai', text: "Totally pressure-free — just gives you real numbers to decide if now feels right.", delay: 2000 },
+                    { type: 'lead', text: "Alright. When are you free?", delay: 2000 },
+                    { type: 'ai', text: "We've got Thursday arvo or Saturday morning open. Want me to lock in Saturday for now?", delay: 2000 },
+                    { type: 'lead', text: "Yep, let's go with Saturday.", delay: 1500 },
+                    { type: 'ai', text: "Done. Locked in for Saturday 10am. We'll come prepared with a few active buyer briefs and sales comps from your pocket.", delay: 2500 },
+                    { type: 'ai', text: "See you then, James! 📊", delay: 1500 }
+                ]
+            }
+        };
+
+        let currentScenario = 'reactivation';
+        let messageIndex = 0;
+        let isPlaying = false;
+        let hasPlayed = false;
+        let demoObserver = null;
+
+        function playScenario(scenario) {
+            currentScenario = scenario;
+            document.querySelectorAll('.scenario-button').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Update contact<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appraisr AI - Custom AI Infrastructure for High-Performing Real Estate Teams</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: #1a1f36;
+            background: #f7f9fc;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Qualification Banner */
+        .qualification-banner {
+            background: #1a1f36;
+            color: #f7f9fc;
+            padding: 15px;
+            text-align: center;
+            font-size: 0.9rem;
+            border-bottom: 2px solid #FF6B35;
+        }
+        
+        .qualification-banner span {
+            color: #FF6B35;
+            font-weight: 700;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: #1a1f36;
+            color: #f7f9fc;
+            padding: 100px 0 80px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(255, 107, 53, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 80% 50%, rgba(247, 147, 30, 0.08) 0%, transparent 50%);
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .qualification-tag {
+            display: inline-block;
+            background: transparent;
+            border: 1px solid #FF6B35;
+            color: #FF6B35;
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 30px;
+            letter-spacing: -2px;
+        }
+        
+        .accent-text {
+            color: #FF6B35;
+        }
+        
+        .subheadline {
+            font-size: 1.4rem;
+            font-weight: 300;
+            max-width: 900px;
+            margin: 0 auto 50px;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+        
+        /* Stats Section */
+        .stats-wrapper {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 30px;
+            margin: 60px 0;
+        }
+        
+        .stat-card {
+            background: rgba(247, 249, 252, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 107, 53, 0.2);
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            background: rgba(247, 249, 252, 0.08);
+            border-color: rgba(255, 107, 53, 0.4);
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: #FF6B35;
+            display: block;
+            margin-bottom: 10px;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.8;
+        }
+        
+        /* CTA Button */
+        .cta-button {
+            display: inline-block;
+            background: #FF6B35;
+            color: white;
+            padding: 20px 50px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            text-decoration: none;
+            border-radius: 100px;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(255, 107, 53, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cta-button:hover {
+            background: #F7931E;
+            transform: translateY(-2px);
+            box-shadow: 0 15px 40px rgba(255, 107, 53, 0.4);
+        }
+        
+        .cta-button-secondary {
+            background: transparent;
+            border: 2px solid #FF6B35;
+            color: #FF6B35;
+            box-shadow: none;
+        }
+        
+        .cta-button-secondary:hover {
+            background: #FF6B35;
+            color: white;
+        }
+        
+        /* Section Styles */
+        .section {
+            padding: 100px 0;
+        }
+        
+        .section-dark {
+            background: #2e2e3a;
+            color: #f7f9fc;
+        }
+        
+        .section-light {
+            background: #f7f9fc;
+        }
+        
+        .section-white {
+            background: white;
+        }
+        
+        h2 {
+            font-size: 3rem;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 20px;
+            letter-spacing: -1px;
+        }
+        
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.3rem;
+            font-weight: 300;
+            max-width: 800px;
+            margin: 0 auto 60px;
+            opacity: 0.8;
+        }
+        
+        /* Insight Box */
+        .insight-box {
+            background: #fff3cd;
+            border-left: 5px solid #FF6B35;
+            padding: 30px 40px;
+            margin: 40px auto;
+            border-radius: 10px;
+            max-width: 900px;
+        }
+        
+        .insight-box h3 {
+            color: #FF6B35;
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+        
+        /* Methodology Cards */
+        .methodology-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            margin-top: 60px;
+        }
+        
+        .methodology-card {
+            background: white;
+            padding: 50px 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(26, 31, 54, 0.08);
+            transition: all 0.3s ease;
+            position: relative;
+            text-align: center;
+        }
+        
+        .methodology-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #FF6B35 0%, #F7931E 100%);
+            border-radius: 20px 20px 0 0;
+        }
+        
+        .methodology-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(26, 31, 54, 0.12);
+        }
+        
+        .methodology-icon {
+            width: 80px;
+            height: 80px;
+            background: rgba(255, 107, 53, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            margin: 0 auto 25px;
+        }
+        
+        .methodology-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #1a1f36;
+        }
+        
+        /* Technology Section */
+        .tech-showcase {
+            background: linear-gradient(135deg, #1a1f36 0%, #2e2e3a 100%);
+            padding: 100px 0;
+            color: #f7f9fc;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .tech-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .tech-badge {
+            display: inline-flex;
+            align-items: center;
+            background: rgba(255, 107, 53, 0.2);
+            border: 1px solid #FF6B35;
+            padding: 10px 25px;
+            border-radius: 50px;
+            margin-bottom: 30px;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        /* Case Study */
+        .case-study-wrapper {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(26, 31, 54, 0.1);
+            margin: 60px auto;
+            max-width: 1000px;
+        }
+        
+        .case-study-header {
+            background: #1a1f36;
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        
+        .case-study-content {
+            padding: 50px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+        }
+        
+        .case-metric {
+            text-align: center;
+        }
+        
+        .case-metric-number {
+            font-size: 3rem;
+            font-weight: 900;
+            color: #FF6B35;
+            display: block;
+            margin-bottom: 10px;
+        }
+        
+        .case-metric-label {
+            font-size: 1rem;
+            color: #2e2e3a;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        /* Qualification Section */
+        .qualification-section {
+            background: #f7f9fc;
+            padding: 80px 0;
+            text-align: center;
+        }
+        
+        .qualification-criteria {
+            max-width: 800px;
+            margin: 40px auto;
+            background: white;
+            padding: 50px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(26, 31, 54, 0.08);
+        }
+        
+        .criteria-list {
+            text-align: left;
+            margin: 30px 0;
+        }
+        
+        .criteria-list li {
+            padding: 15px 0;
+            border-bottom: 1px solid #e5e9f2;
+            list-style: none;
+            display: flex;
+            align-items: center;
+        }
+        
+        .criteria-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .criteria-list li:before {
+            content: "✓";
+            color: #FF6B35;
+            font-weight: bold;
+            font-size: 1.5rem;
+            margin-right: 15px;
+        }
+        
+        /* ROI Calculator Teaser */
+        .roi-teaser {
+            background: #FF6B35;
+            color: white;
+            padding: 60px;
+            border-radius: 20px;
+            text-align: center;
+            margin: 60px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .roi-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        /* Final CTA */
+        .final-cta {
+            background: #1a1f36;
+            padding: 100px 0;
+            text-align: center;
+            position: relative;
+        }
+        
+        .final-cta h2 {
+            color: #f7f9fc;
+            margin-bottom: 30px;
+        }
+        
+        .final-cta p {
+            color: #e5e9f2;
+            font-size: 1.3rem;
+            max-width: 800px;
+            margin: 0 auto 40px;
+        }
+        
+        .cta-wrapper {
+            text-align: center;
+            margin: 50px 0;
+        }
+        
+        .small-text {
+            font-size: 0.9rem;
+            opacity: 0.7;
+            margin-top: 15px;
+        }
+        
+        /* iPhone Demo Styles - More Authentic iOS */
+        .demo-section {
+            background: #f7f9fc;
+            padding: 100px 0;
+            overflow: hidden;
+        }
+        
+        .iphone-container {
+            max-width: 375px;
+            margin: 60px auto;
+            position: relative;
+        }
+        
+        .iphone-frame {
+            background: #000;
+            border-radius: 40px;
+            padding: 10px;
+            box-shadow: 
+                0 0 0 3px #1a1a1a,
+                0 0 0 4px #2a2a2a,
+                0 20px 40px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+        
+        /* iPhone Notch */
+        .iphone-frame::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 25px;
+            background: #000;
+            border-radius: 0 0 20px 20px;
+            z-index: 10;
+        }
+        
+        .iphone-screen {
+            background: #fff;
+            border-radius: 30px;
+            height: 750px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* iOS Status Bar */
+        .ios-status-bar {
+            background: #f7f9fc;
+            padding: 35px 20px 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8rem;
+            color: #000;
+        }
+        
+        .iphone-header {
+            background: #f7f9fc;
+            padding: 10px 20px 15px;
+            border-bottom: 1px solid #e5e9f2;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .back-arrow {
+            color: #007AFF;
+            font-size: 1.2rem;
+            text-decoration: none;
+        }
+        
+        .contact-info {
+            flex: 1;
+            text-align: center;
+        }
+        
+        .contact-name {
+            font-weight: 600;
+            color: #000;
+            font-size: 1rem;
+            display: block;
+        }
+        
+        .contact-subtitle {
+            font-size: 0.75rem;
+            color: #8e8e93;
+            display: block;
+            margin-top: 2px;
+        }
+        
+        .messages-container {
+            height: 580px;
+            overflow-y: auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            background: #fff;
+        }
+        
+        .message {
+            max-width: 70%;
+            padding: 10px 16px;
+            font-size: 0.95rem;
+            line-height: 1.4;
+            position: relative;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.4s ease;
+        }
+        
+        .message.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .message-ai {
+            background: #007AFF;
+            color: white;
+            align-self: flex-end;
+            border-radius: 18px 18px 4px 18px;
+            margin-right: 2px;
+        }
+        
+        .message-lead {
+            background: #e9e9eb;
+            color: #000;
+            align-self: flex-start;
+            border-radius: 18px 18px 18px 4px;
+            margin-left: 2px;
+        }
+        
+        .message-time {
+            font-size: 0.7rem;
+            color: #8e8e93;
+            margin-top: 5px;
+            text-align: right;
+        }
+        
+        .lead .message-time {
+            text-align: left;
+        }
+        
+        .typing-indicator {
+            display: none;
+            align-self: flex-start;
+            padding: 12px 20px;
+            background: #e9e9eb;
+            border-radius: 18px 18px 18px 4px;
+            margin-left: 2px;
+        }
+        
+        .typing-indicator.show {
+            display: block;
+        }
+        
+        .typing-dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: #8e8e93;
+            border-radius: 50%;
+            margin: 0 2px;
+            animation: typing 1.4s infinite;
+        }
+        
+        /* iOS Input Bar */
+        .ios-input-bar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #f7f9fc;
+            border-top: 1px solid #e5e9f2;
+            padding: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .ios-input {
+            flex: 1;
+            background: #fff;
+            border: 1px solid #e5e9f2;
+            border-radius: 20px;
+            padding: 8px 16px;
+            font-size: 0.95rem;
+            outline: none;
+        }
+        
+        .ios-send-button {
+            width: 32px;
+            height: 32px;
+            background: #007AFF;
+            border: none;
+            border-radius: 50%;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        
+        @keyframes typing {
+            0%, 60%, 100% {
+                opacity: 0.3;
+                transform: translateY(0);
+            }
+            30% {
+                opacity: 1;
+                transform: translateY(-10px);
+            }
+        }
+        
+        .demo-controls {
+            text-align: center;
+            margin-top: 40px;
+        }
+        
+        .demo-button {
+            background: #FF6B35;
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .demo-button:hover {
+            background: #F7931E;
+            transform: translateY(-2px);
+        }
+        
+        .demo-scenarios {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+        
+        .scenario-button {
+            background: white;
+            border: 2px solid #e5e9f2;
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .scenario-button:hover,
+        .scenario-button.active {
+            border-color: #FF6B35;
+            color: #FF6B35;
+            background: #fff3cd;
+        }
+        
+        .highlight-new {
+            animation: highlightPulse 2s ease-in-out 3;
+        }
+        
+        @keyframes highlightPulse {
+            0%, 100% { background-color: transparent; }
+            50% { background-color: rgba(255, 107, 53, 0.1); }
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            h2 {
+                font-size: 2rem;
+            }
+            
+            .stats-wrapper {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .methodology-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .case-study-content {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            
+            .iphone-container {
+                max-width: 350px;
+            }
+            
+            .iphone-screen {
+                height: 600px;
+            }
+            
+            .messages-container {
+                height: 480px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="qualification-tag">Real Estate Agencies or Agents doing $30-$50k in monthly GCI</div>
+                <h1>The AI Lead Reactivation System That's Generating <span class="accent-text">46+ Listings</span> Every 60 Days</h1>
+                <p class="subheadline">Discover how top real estate agents are using custom AI infrastructure to automatically reactivate dead leads, qualify buyers 24/7, and book listing appointments while they sleep — adding $500K-$2M in annual GCI without hiring more staff.</p>
+                
+                <div class="stats-wrapper">
+                    <div class="stat-card">
+                        <span class="stat-number">46</span>
+                        <span class="stat-label">Avg Appraisals/60 Days</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number">$350K</span>
+                        <span class="stat-label">Dormant Database Value</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number">5 Sec</span>
+                        <span class="stat-label">Response Time</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number">34%</span>
+                        <span class="stat-label">CRM Reactivation Rate</span>
+                    </div>
+                </div>
+                
+                <div class="cta-wrapper">
+                    <a href="#" class="cta-button">Unlock Hidden GCI Now →</a>
+                    <a href="#" class="cta-button cta-button-secondary" style="margin-left: 20px;">See If Your Database Qualifies</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section class="section section-light">
+        <div class="container">
+            <h2>Meet <span class="accent-text">Appraisr</span>: The AI That Sells Like You Do</h2>
+            <p class="section-subtitle">Your digital twin that works your database while you work your listings</p>
+            
+            <div style="max-width: 900px; margin: 40px auto;">
+                <div style="background: #fff; padding: 50px; border-radius: 20px; box-shadow: 0 20px 60px rgba(26, 31, 54, 0.1); border-left: 5px solid #FF6B35;">
+                    <h3 style="font-size: 1.8rem; margin-bottom: 25px; color: #1a1f36;">Imagine Having a Clone of Yourself That:</h3>
+                    <ul style="list-style: none; padding: 0; font-size: 1.2rem; line-height: 2;">
+                        <li style="padding: 10px 0;"><span style="color: #FF6B35; font-weight: bold;">▸</span> Works through your entire database 24/7, reaching out to every dormant contact</li>
+                        <li style="padding: 10px 0;"><span style="color: #FF6B35; font-weight: bold;">▸</span> Responds to new enquiries in 5 seconds (while you're showing properties)</li>
+                        <li style="padding: 10px 0;"><span style="color: #FF6B35; font-weight: bold;">▸</span> Sounds EXACTLY like you — your tone, your knowledge, your personality</li>
+                        <li style="padding: 10px 0;"><span style="color: #FF6B35; font-weight: bold;">▸</span> Books 46+ listing appointments every 60 days on complete autopilot</li>
+                        <li style="padding: 10px 0;"><span style="color: #FF6B35; font-weight: bold;">▸</span> Handles objections, qualifies sellers, and fills your calendar with hot leads</li>
+                    </ul>
+                    <p style="margin-top: 30px; font-size: 1.2rem; text-align: center; font-weight: 600; color: #1a1f36;">
+                        That's Appraisr. Not another chatbot. Your AI-powered sales team.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="insight-box" style="margin-top: 40px;">
+                <h3>⚡ The Hidden Cost of Manual Follow-Up</h3>
+                <p>While you're busy showing properties, hundreds of opportunities sit dormant in your database. Your competition is converting leads faster with AI. Every day without automated reactivation is commission lost. Appraisr ensures you capture every opportunity, automatically.</p>
+            </div>
+            
+            <h2>How <span class="accent-text">Appraisr</span> Works Its Magic</h2>
+            <p class="section-subtitle">The three-step process to database domination</p>
+            
+            <div class="methodology-grid">
+                <div class="methodology-card">
+                    <div class="methodology-icon">1️⃣</div>
+                    <h3 class="methodology-title">We Map Your Success DNA</h3>
+                    <p>First, we analyse your best-performing scripts, past conversations, and winning messages. We learn what makes YOU successful — your tone, your approach, your local market expertise.</p>
+                </div>
+                <div class="methodology-card">
+                    <div class="methodology-icon">2️⃣</div>
+                    <h3 class="methodology-title">We Build Your AI Twin</h3>
+                    <p>Using your data, we train a custom LLM that thinks and communicates exactly like you. Not templates. Not generic responses. Authentic conversations that convert.</p>
+                </div>
+                <div class="methodology-card">
+                    <div class="methodology-icon">3️⃣</div>
+                    <h3 class="methodology-title">We Activate Your Database</h3>
+                    <p>Your AI agent goes to work immediately — reactivating old leads, responding to new enquiries, booking appointments. All while maintaining your exact communication style.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="demo-section">
+        <div class="container">
+            <h2>See Your <span class="accent-text">AI Agent</span> In Action</h2>
+            <p class="section-subtitle">Watch how our AI reactivates dead leads and books real appointments</p>
+            
+            <div class="demo-scenarios">
+                <button class="scenario-button active" onclick="playScenario('reactivation')">Database Reactivation</button>
+                <button class="scenario-button" onclick="playScenario('market')">Market Inquiry</button>
+            </div>
+            
+            <div class="iphone-container">
+                <div class="iphone-frame">
+                    <div class="iphone-screen">
+                        <div class="ios-status-bar">
+                            <span>9:41</span>
+                            <span>●●●●● ᯤ 100%</span>
+                        </div>
+                        <div class="iphone-header">
+                            <a href="#" class="back-arrow">‹</a>
+                            <div class="contact-info">
+                                <span class="contact-name">Sarah Chen</span>
+                                <span class="contact-subtitle">Past Client</span>
+                            </div>
+                            <span style="width: 20px;"></span>
+                        </div>
+                        <div class="messages-container" id="messagesContainer">
+                            <!-- Messages will be dynamically added here -->
+                        </div>
+                        <div class="typing-indicator" id="typingIndicator">
+                            <span class="typing-dot"></span>
+                            <span class="typing-dot"></span>
+                            <span class="typing-dot"></span>
+                        </div>
+                        <div class="ios-input-bar">
+                            <input type="text" class="ios-input" placeholder="iMessage" disabled>
+                            <button class="ios-send-button">↑</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="demo-controls">
+                <button class="demo-button" onclick="replayDemo()">Replay Conversation</button>
+            </div>
+            
+            <p style="text-align: center; margin-top: 40px; font-size: 1.1rem; color: #2e2e3a;">
+                This AI books <strong>46+ appraisals every 60 days</strong> from dead databases
+            </p>
+        </div>
+    </section>
+
+    <div class="tech-showcase">
+        <div class="container">
+            <div class="tech-content">
+                <div class="tech-badge">Appraisr Methodology</div>
+                <h2>Why <span class="accent-text">Appraisr</span> Real Estate Agents Dominate</h2>
+                <p class="section-subtitle">The four-pillar AI system that turns dead leads into live listings</p>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 40px; margin-top: 60px;">
+                    <div style="text-align: center;">
+                        <h3 style="font-size: 5rem; font-weight: 900; color: #FF6B35; margin-bottom: 20px;">1</h3>
+                        <h4 style="font-size: 1.5rem; margin-bottom: 15px;">Database Reactivation Engine</h4>
+                        <p style="opacity: 0.9;">Your AI reaches out to every dormant contact with hyper-personalized messages. It remembers their property, mentions recent area sales, and books appraisals while you focus on closing.</p>
+                    </div>
+                    <div style="text-align: center;">
+                        <h3 style="font-size: 5rem; font-weight: 900; color: #FF6B35; margin-bottom: 20px;">2</h3>
+                        <h4 style="font-size: 1.5rem; margin-bottom: 15px;">24/7 Speed-to-Lead System</h4>
+                        <p style="opacity: 0.9;">New enquiry at 2am? Your AI responds in seconds, qualifies intent, handles objections, and books appointments. By morning, your calendar is full of qualified opportunities.</p>
+                    </div>
+                    <div style="text-align: center;">
+                        <h3 style="font-size: 5rem; font-weight: 900; color: #FF6B35; margin-bottom: 20px;">3</h3>
+                        <h4 style="font-size: 1.5rem; margin-bottom: 15px;">Intelligent Nurture Sequences</h4>
+                        <p style="opacity: 0.9;">Every lead gets a personalized journey based on their behavior, market timing, and readiness indicators. Your AI knows when to push, when to educate, and when to close.</p>
+                    </div>
+                    <div style="text-align: center;">
+                        <h3 style="font-size: 5rem; font-weight: 900; color: #FF6B35; margin-bottom: 20px;">4</h3>
+                        <h4 style="font-size: 1.5rem; margin-bottom: 15px;">Real-Time Market Intelligence</h4>
+                        <p style="opacity: 0.9;">Your AI pulls live data from REA, Domain, and CoreLogic to qualify high-intent sellers. It knows who's ready to move based on market conditions, not just conversation.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section class="section section-white">
+        <div class="container">
+            <h2>Real Results From <span class="accent-text">Real Agents</span></h2>
+            <p class="section-subtitle">How Foundation Partners transformed their business in 60 days</p>
+            
+            <div class="case-study-wrapper">
+                <div class="case-study-header">
+                    <h3 style="font-size: 1.8rem; margin: 0;">James Voltscos - Hockingstuart</h3>
+                    <p style="margin-top: 10px; opacity: 0.9;">Early Infrastructure Adopter</p>
+                </div>
+                <div class="case-study-content">
+                    <div class="case-metric">
+                        <span class="case-metric-number">46</span>
+                        <span class="case-metric-label">Appraisals Booked</span>
+                    </div>
+                    <div class="case-metric">
+                        <span class="case-metric-number">$71K</span>
+                        <span class="case-metric-label">Pipeline Created</span>
+                    </div>
+                    <div class="case-metric">
+                        <span class="case-metric-number">200+</span>
+                        <span class="case-metric-label">Hours Saved/Agent</span>
+                    </div>
+                    <div class="case-metric">
+                        <span class="case-metric-number">$0</span>
+                        <span class="case-metric-label">Spent on Marketing</span>
+                    </div>
+                </div>
+            </div>
+            
+            <p style="text-align: center; margin-top: 40px; font-size: 1.2rem; max-width: 700px; margin-left: auto; margin-right: auto;">
+                "While every other agent is using the same $97/month chatbot that sounds like a robot, I have infrastructure that speaks exactly like me. It's not even a fair fight anymore."
+                <br><strong style="display: block; margin-top: 15px;">— James Voltscos, Hockingstuart</strong>
+            </p>
+            
+            <div class="cta-wrapper">
+                <a href="#" class="cta-button">Activate Your Database Now →</a>
+            </div>
+        </div>
+    </section>
+
+    <div class="qualification-section">
+        <div class="container">
+            <h2>Is <span class="accent-text">Appraisr</span> Right For You?</h2>
+            <p class="section-subtitle">We partner with select agents who meet our growth criteria</p>
+            
+            <div class="qualification-criteria">
+                <h3 style="margin-bottom: 20px;">Perfect For Real Estate Agents Who:</h3>
+                <ul class="criteria-list">
+                    <li>Want to reactivate their database on autopilot</li>
+                    <li>Are tired of missing leads while showing properties</li>
+                    <li>Have 4,000+ contacts but no time to nurture them</li>
+                    <li>Currently doing $30K-$50K monthly in commissions</li>
+                    <li>Run agencies with multiple agents needing systems</li>
+                </ul>
+                <p style="margin-top: 30px; text-align: center; font-style: italic;">
+                    If you're ready to turn your dead database into your biggest revenue source, let's talk.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <section class="section section-light">
+        <div class="container">
+            <h2>The <span class="accent-text">Database Reactivation</span> Math Every Agent Needs</h2>
+            <p class="section-subtitle">Understanding how AI turns dormant contacts into active listings</p>
+            
+            <div class="roi-teaser">
+                <div class="roi-content">
+                    <h3 style="font-size: 2rem; margin-bottom: 20px;">Your Hidden Listing Opportunity Calculator</h3>
+                    <p style="font-size: 1.2rem; margin-bottom: 30px;">
+                        Real estate agents with 4,000 database contacts are sitting on 1,360 potential listings.<br>
+                        Our AI agents consistently reactivate 34% of dead databases.
+                    </p>
+                    <p style="font-size: 1.1rem;">
+                        <strong>The formula:</strong> 4,000 contacts × 34% reactivation × $15,000 avg = $612K opportunity
+                    </p>
+                </div>
+            </div>
+            
+            <p style="text-align: center; margin-top: 60px; font-size: 1.3rem; max-width: 800px; margin-left: auto; margin-right: auto;">
+                Smart agents are using AI to mine their databases for gold.<br>
+                Everyone else is still buying leads they already own.
+            </p>
+        </div>
+    </section>
+
+    <div class="final-cta">
+        <div class="container">
+            <h2>Ready To <span class="accent-text">Reactivate Your Database</span> On Autopilot?</h2>
+            <p>Stop letting listings die in your CRM. Build an AI agent that works your database 24/7, books appointments while you sleep, and sounds exactly like you at your best.</p>
+            
+            <p style="font-size: 1.3rem; margin: 40px auto; max-width: 700px;">
+                During your consultation, we'll analyze your database, show you the AI in action on real leads, and calculate exactly how many dormant listings you're sitting on.
+            </p>
+            
+            <a href="#" class="cta-button" style="font-size: 1.2rem; padding: 25px 60px;">Book Your AI Strategy Session →</a>
+            <p class="small-text" style="color: #e5e9f2;">See your custom AI agent in action. Real estate agents only.</p>
+            
+            <p style="margin-top: 80px; font-size: 1rem; opacity: 0.7; color: #e5e9f2; max-width: 600px; margin-left: auto; margin-right: auto;">
+                Note: We partner with one agent per area (LGA) to ensure market exclusivity. Currently accepting applications in select areas. Limited availability.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Demo conversation scripts
+        const scenarios = {
+            reactivation: {
+                contact: "Sarah Chen",
+                subtitle: "Past Client",
+                messages: [
+                    { type: 'ai', text: "Hey Sarah — totally random, but we've got 3 buyers at the moment looking for a place like yours around Jasper Rd. One actually missed out on a nearly identical home last week.", delay: 2500 },
+                    { type: 'ai', text: "Just wondering… is selling still on your radar at all, or off the table for now?", delay: 2000 },
+                    { type: 'lead', text: "Tbh, haven't really thought much about it. Market feels a bit all over the place.", delay: 3000 },
+                    { type: 'ai', text: "That's fair — it's definitely been up and down. That said, Jasper's actually been moving again the past month. Median price is up just over 3%, and we've seen a few go under offer in under 3 weeks.", delay: 3500 },
+                    { type: 'ai', text: "If it helps, we could do a super quick walkthrough and give you an updated price — no commitments, just good info.", delay: 2500 },
+                    { type: 'lead', text: "I just don't want to deal with opens and people traipsing through the house again…", delay: 3000 },
+                    { type: 'ai', text: "Totally get that. Actually, we've helped a few owners go off-market recently — no opens, no boards. Just matched them to buyers from our active list.", delay: 3000 },
+                    { type: 'ai', text: "Could be worth seeing if any of the current buyers are a fit for yours. Want me to pencil in a quick walkthrough? Takes 15 mins.", delay: 2500 },
+                    { type: 'lead', text: "Alright, what days work?", delay: 2000 },
+                    { type: 'ai', text: "Love it. We've got Thursday 5:30 or Saturday 10am free. Want to lock in Saturday?", delay: 2000 },
+                    { type: 'lead', text: "Let's do Saturday.", delay: 1500 },
+                    { type: 'ai', text: "Perfect. You're all set for Saturday 10am with our team. We'll bring updated sales data + buyer match profiles so you can see if it's worth acting now or holding.", delay: 3000 },
+                    { type: 'ai', text: "Chat soon! 🏠", delay: 1500 }
+                ]
+            },
+            market: {
+                contact: "James Wilson",
+                subtitle: "New Enquiry",
+                messages: [
+                    { type: 'lead', text: "Hey, just curious — is it a good time to sell in Bentleigh East?", delay: 2000 },
+                    { type: 'ai', text: "Hey James — good question. Things have actually picked up lately. We've had 6 homes go under offer in the last month, and prices are creeping back up — about 2.8% since Feb.", delay: 3500 },
+                    { type: 'ai', text: "Also seeing less days on market, especially for 3-bed homes. Yours would slot right into that demand pocket.", delay: 2500 },
+                    { type: 'lead', text: "Still feels risky with rates and everything…", delay: 2500 },
+                    { type: 'ai', text: "100% fair. A lot of owners are cautious. That's why we've been doing more low-key 'quiet campaigns' — basically pre-qualified buyers only, no public opens, just a few direct walkthroughs.", delay: 3500 },
+                    { type: 'ai', text: "We had a Wickham Rd home go under that exact setup last week — matched to a buyer in 6 days.", delay: 2500 },
+                    { type: 'lead', text: "Interesting… how would I even start something like that?", delay: 2500 },
+                    { type: 'ai', text: "First step's easy — we do a quick walkthrough to get a feel for condition, updates, etc., then give you a custom price guide + buyer interest snapshot.", delay: 3000 },
+                    { type: 'ai', text: "Totally pressure-free — just gives you real numbers to decide if now feels right.", delay: 2000 },
+                    { type: 'lead', text: "Alright. When are you free?", delay: 2000 },
+                    { type: 'ai', text: "We've got Thursday arvo or Saturday morning open. Want me to lock in Saturday for now?", delay: 2000 },
+                    { type: 'lead', text: "Yep, let's go with Saturday.", delay: 1500 },
+                    { type: 'ai', text: "Done. Locked in for Saturday 10am. We'll come prepared with a few active buyer briefs and sales comps from your pocket.", delay: 2500 },
+                    { type: 'ai', text: "See you then, James! 📊", delay: 1500 }
+                ]
+            }
+        };
+
+        let currentScenario = 'reactivation';
+        let messageIndex = 0;
+        let isPlaying = false;
+        let hasPlayed = false;
+        let demoObserver = null;
+
+        function playScenario(scenario) {
+            currentScenario = scenario;
+            document.querySelectorAll('.scenario-button').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Update contact info
+            document.querySelector('.contact-name').textContent = scenarios[scenario].contact;
+            document.querySelector('.contact-subtitle').textContent = scenarios[scenario].subtitle;
+            
+            resetDemo();
+            startDemo();
+        }
+
+        function resetDemo() {
+            const container = document.getElementById('messagesContainer');
+            container.innerHTML = '';
+            messageIndex = 0;
+            isPlaying = false;
+            document.getElementById('typingIndicator').classList.remove('show');
+        }
+
+        function startDemo() {
+            if (isPlaying) return;
+            isPlaying = true;
+            hasPlayed = true;
+            displayNextMessage();
+        }
+
+        function displayNextMessage() {
+            const messages = scenarios[currentScenario].messages;
+            if (messageIndex >= messages.length) {
+                isPlaying = false;
+                return;
+            }
+
+            const message = messages[messageIndex];
+            const container = document.getElementById('messagesContainer');
+            const typingIndicator = document.getElementById('typingIndicator');
+
+            // Show typing indicator for lead messages
+            if (message.type === 'lead') {
+                typingIndicator.classList.add('show');
+                setTimeout(() => {
+                    typingIndicator.classList.remove('show');
+                    addMessage(message);
+                }, 1500);
+            } else {
+                addMessage(message);
+            }
+
+            messageIndex++;
+            setTimeout(() => displayNextMessage(), message.delay);
+        }
+
+        function addMessage(message) {
+            const container = document.getElementById('messagesContainer');
+            const messageWrapper = document.createElement('div');
+            messageWrapper.className = message.type === 'ai' ? 'ai' : 'lead';
+            
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message message-${message.type}`;
+            messageDiv.textContent = message.text;
+            
+            const timeDiv = document.createElement('div');
+            timeDiv.className = 'message-time';
+            const now = new Date();
+            timeDiv.textContent = now.toLocaleTimeString('en-AU', { hour: '2-digit', minute: '2-digit' });
+            
+            messageWrapper.appendChild(messageDiv);
+            messageWrapper.appendChild(timeDiv);
+            container.appendChild(messageWrapper);
+            
+            // Animate message appearance
+            setTimeout(() => {
+                messageDiv.classList.add('show');
+            }, 100);
+            
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function replayDemo() {
+            resetDemo();
+            startDemo();
+        }
+
+        // Set up Intersection Observer for hover trigger
+        function setupDemoObserver() {
+            const demoSection = document.querySelector('.demo-section');
+            
+            demoObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && !hasPlayed) {
+                        // Start demo when section is in view
+                        setTimeout(() => startDemo(), 500);
+                    }
+                });
+            }, {
+                threshold: 0.5
+            });
+            
+            if (demoSection) {
+                demoObserver.observe(demoSection);
+            }
+        }
+
+        // Initialize on page load
+        window.addEventListener('load', () => {
+            setupDemoObserver();
+        });
+    </script>
+</body>
+</html>
