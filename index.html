@@ -746,6 +746,160 @@
                 height: 480px;
             }
         }
+        
+        /* Modal Styles */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            overflow-y: auto;
+            padding: 20px;
+        }
+        
+        .modal-overlay.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            max-width: 600px;
+            width: 100%;
+            padding: 40px;
+            position: relative;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            background: #f7f9fc;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: #1a1f36;
+            transition: all 0.3s ease;
+        }
+        
+        .modal-close:hover {
+            background: #e5e9f2;
+            transform: rotate(90deg);
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #1a1f36;
+            font-size: 1rem;
+        }
+        
+        .form-input,
+        .form-select {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e5e9f2;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: white;
+        }
+        
+        .form-input:focus,
+        .form-select:focus {
+            outline: none;
+            border-color: #FF6B35;
+            box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
+        }
+        
+        .form-submit {
+            background: #FF6B35;
+            color: white;
+            padding: 18px 40px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .form-submit:hover {
+            background: #F7931E;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255, 107, 53, 0.3);
+        }
+        
+        .form-submit:disabled {
+            background: #e5e9f2;
+            color: #8e8e93;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .qualification-result {
+            display: none;
+            text-align: center;
+            padding: 30px;
+            background: #f7f9fc;
+            border-radius: 15px;
+            margin-top: 20px;
+        }
+        
+        .qualification-result.show {
+            display: block;
+        }
+        
+        .result-success {
+            background: #e8f5e9;
+            border: 2px solid #4caf50;
+        }
+        
+        .result-pending {
+            background: #fff3cd;
+            border: 2px solid #FF6B35;
+        }
+        
+        .progress-bar {
+            background: #e5e9f2;
+            height: 6px;
+            border-radius: 3px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            background: #FF6B35;
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        
+        @media (max-width: 768px) {
+            .modal-content {
+                padding: 30px 20px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -881,6 +1035,19 @@
             <p style="text-align: center; margin-top: 40px; font-size: 1.1rem; color: #2e2e3a;">
                 This AI books <strong>46+ appraisals every 60 days</strong> from dead databases
             </p>
+            
+            <div style="text-align: center; margin-top: 40px;">
+                <p style="font-size: 1.3rem; font-weight: 700; color: #1a1f36; margin-bottom: 20px;">
+                    Want Your Own AI That Sounds Exactly Like You?
+                </p>
+                <p style="font-size: 1.1rem; color: #2e2e3a; margin-bottom: 30px; max-width: 600px; margin-left: auto; margin-right: auto;">
+                    Stop watching demos. Start watching your calendar fill with qualified appointments while you sleep.
+                </p>
+                <a href="#" class="cta-button">Get Your AI Agent Working Today →</a>
+                <p style="font-size: 0.9rem; color: #8e8e93; margin-top: 15px;">
+                    <strong>Limited spots available</strong> — We only partner with one agent per area
+                </p>
+            </div>
         </div>
     </section>
 
@@ -1014,10 +1181,10 @@
             </p>
             
             <a href="#" class="cta-button" style="font-size: 1.2rem; padding: 25px 60px;">Book Your AI Strategy Session →</a>
-            <p class="small-text" style="color: #e5e9f2;">See your custom AI agent in action. Real estate agents only.</p>
+            <p class="small-text" style="color: #e5e9f2;">See your custom AI agent in action.</p>
             
             <p style="margin-top: 80px; font-size: 1rem; opacity: 0.7; color: #e5e9f2; max-width: 600px; margin-left: auto; margin-right: auto;">
-                Note: We partner with one agent per area (LGA) to ensure market exclusivity. Currently accepting applications in select areas. Limited availability.
+                Note: We partner with one agent per area (LGA) to ensure market exclusivity. Currently accepting applications in select areas. Limited availability.<br>Real estate agents only.
             </p>
         </div>
     </div>
@@ -1180,6 +1347,261 @@
         // Initialize on page load
         window.addEventListener('load', () => {
             setupDemoObserver();
+        });
+    </script>
+
+    <!-- Qualification Modal -->
+    <div class="modal-overlay" id="qualificationModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()">×</button>
+            
+            <h2 style="font-size: 2rem; margin-bottom: 10px; color: #1a1f36;">Let's See If <span class="accent-text">Appraisr</span> Is Right For You</h2>
+            <p style="color: #8e8e93; margin-bottom: 30px;">Answer a few quick questions to see if you qualify for our exclusive AI infrastructure program.</p>
+            
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressBar"></div>
+            </div>
+            
+            <form id="qualificationForm" onsubmit="handleFormSubmit(event)">
+                <!-- Step 1 -->
+                <div class="form-step" data-step="1">
+                    <div class="form-group">
+                        <label class="form-label">What's your current monthly GCI (Gross Commission Income)?</label>
+                        <select class="form-select" name="gci" required>
+                            <option value="">Select your monthly GCI</option>
+                            <option value="under-10k">Under $10,000</option>
+                            <option value="10-20k">$10,000 - $20,000</option>
+                            <option value="20-30k">$20,000 - $30,000</option>
+                            <option value="30-50k">$30,000 - $50,000</option>
+                            <option value="50k-plus">$50,000+</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <!-- Step 2 -->
+                <div class="form-step" data-step="2" style="display: none;">
+                    <div class="form-group">
+                        <label class="form-label">How many contacts do you have in your database?</label>
+                        <select class="form-select" name="database" required>
+                            <option value="">Select database size</option>
+                            <option value="under-1k">Under 1,000</option>
+                            <option value="1-2k">1,000 - 2,000</option>
+                            <option value="2-4k">2,000 - 4,000</option>
+                            <option value="4k-plus">4,000+</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <!-- Step 3 -->
+                <div class="form-step" data-step="3" style="display: none;">
+                    <div class="form-group">
+                        <label class="form-label">Are you an individual agent or do you run an agency?</label>
+                        <select class="form-select" name="type" required>
+                            <option value="">Select one</option>
+                            <option value="agent">Individual Agent</option>
+                            <option value="agency">Agency Owner/Principal</option>
+                            <option value="team">Team Leader</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <!-- Step 4 - Contact Info -->
+                <div class="form-step" data-step="4" style="display: none;">
+                    <div class="form-group">
+                        <label class="form-label">Full Name</label>
+                        <input type="text" class="form-input" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Email Address</label>
+                        <input type="email" class="form-input" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Phone Number</label>
+                        <input type="tel" class="form-input" name="phone" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Agency/Brokerage Name</label>
+                        <input type="text" class="form-input" name="agency" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Location (City, State)</label>
+                        <input type="text" class="form-input" name="location" placeholder="e.g., Melbourne, VIC" required>
+                    </div>
+                </div>
+                
+                <div style="display: flex; gap: 15px; margin-top: 30px;">
+                    <button type="button" class="form-submit" id="prevBtn" onclick="changeStep(-1)" style="display: none; background: #e5e9f2; color: #1a1f36;">Previous</button>
+                    <button type="button" class="form-submit" id="nextBtn" onclick="changeStep(1)">Next</button>
+                    <button type="submit" class="form-submit" id="submitBtn" style="display: none;">See If You Qualify</button>
+                </div>
+            </form>
+            
+            <!-- Results -->
+            <div class="qualification-result result-success" id="successResult">
+                <h3 style="color: #4caf50; margin-bottom: 15px;">🎉 Congratulations! You Qualify!</h3>
+                <p style="margin-bottom: 20px;">Based on your responses, you're a perfect fit for Appraisr AI infrastructure. Let's schedule a time to show you exactly how we can help you generate 46+ listings every 60 days.</p>
+                
+                <!-- Calendly inline widget -->
+                <div class="calendly-inline-widget" data-url="https://calendly.com/your-username/30min?hide_event_type_details=1&hide_gdpr_banner=1" style="min-width:320px;height:630px;margin-top:20px;"></div>
+                <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
+                
+                <p style="margin-top: 20px; font-size: 0.9rem; color: #8e8e93;">
+                    Can't find a time that works? <a href="mailto:contact@appraisr.ai" style="color: #FF6B35;">Email us directly</a>
+                </p>
+            </div>
+            
+            <div class="qualification-result result-pending" id="pendingResult">
+                <h3 style="color: #FF6B35; margin-bottom: 15px;">Thank You for Your Interest!</h3>
+                <p>While you don't meet our current qualification criteria, we're always evolving our offerings. We'll keep your information on file and reach out when we have solutions that match your needs.</p>
+                <p style="margin-top: 20px;">
+                    <strong>What happens next:</strong><br>
+                    • We'll review your application within 24 hours<br>
+                    • If circumstances change, we'll reach out immediately<br>
+                    • You'll receive our monthly AI insights newsletter
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentStep = 1;
+        const totalSteps = 4;
+        
+        // Update all CTA buttons to open modal
+        document.addEventListener('DOMContentLoaded', function() {
+            const ctaButtons = document.querySelectorAll('.cta-button');
+            ctaButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    openModal();
+                });
+            });
+        });
+        
+        function openModal() {
+            document.getElementById('qualificationModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+            currentStep = 1;
+            showStep(1);
+            updateProgressBar();
+        }
+        
+        function closeModal() {
+            document.getElementById('qualificationModal').classList.remove('active');
+            document.body.style.overflow = 'auto';
+            document.getElementById('qualificationForm').reset();
+            document.querySelectorAll('.qualification-result').forEach(el => el.classList.remove('show'));
+        }
+        
+        function showStep(step) {
+            document.querySelectorAll('.form-step').forEach(el => {
+                el.style.display = 'none';
+            });
+            document.querySelector(`[data-step="${step}"]`).style.display = 'block';
+            
+            // Update buttons
+            document.getElementById('prevBtn').style.display = step > 1 ? 'block' : 'none';
+            document.getElementById('nextBtn').style.display = step < totalSteps ? 'block' : 'none';
+            document.getElementById('submitBtn').style.display = step === totalSteps ? 'block' : 'none';
+            
+            updateProgressBar();
+        }
+        
+        function changeStep(direction) {
+            const currentStepElement = document.querySelector(`[data-step="${currentStep}"]`);
+            const inputs = currentStepElement.querySelectorAll('input, select');
+            let isValid = true;
+            
+            // Validate current step before moving forward
+            if (direction > 0) {
+                inputs.forEach(input => {
+                    if (!input.checkValidity()) {
+                        input.reportValidity();
+                        isValid = false;
+                    }
+                });
+                
+                if (!isValid) return;
+            }
+            
+            currentStep += direction;
+            if (currentStep < 1) currentStep = 1;
+            if (currentStep > totalSteps) currentStep = totalSteps;
+            
+            showStep(currentStep);
+        }
+        
+        function updateProgressBar() {
+            const progress = (currentStep / totalSteps) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+        }
+        
+        function handleFormSubmit(event) {
+            event.preventDefault();
+            
+            const formData = new FormData(event.target);
+            const data = Object.fromEntries(formData);
+            
+            // Check qualification
+            const isQualified = checkQualification(data);
+            
+            // Hide form
+            document.getElementById('qualificationForm').style.display = 'none';
+            
+            // Show appropriate result
+            if (isQualified) {
+                document.getElementById('successResult').classList.add('show');
+                
+                // Pre-fill Calendly with user data
+                const calendlyWidget = document.querySelector('.calendly-inline-widget');
+                if (calendlyWidget) {
+                    const encodedName = encodeURIComponent(data.name);
+                    const encodedEmail = encodeURIComponent(data.email);
+                    const customAnswers = encodeURIComponent(`Phone: ${data.phone}, Agency: ${data.agency}, Location: ${data.location}, GCI: ${data.gci}, Database: ${data.database}`);
+                    
+                    calendlyWidget.setAttribute('data-url', 
+                        `https://calendly.com/your-username/30min?hide_event_type_details=1&hide_gdpr_banner=1&name=${encodedName}&email=${encodedEmail}&a1=${customAnswers}`
+                    );
+                    
+                    // Reload Calendly widget with new data
+                    if (window.Calendly) {
+                        window.Calendly.initInlineWidget({
+                            url: calendlyWidget.getAttribute('data-url'),
+                            parentElement: calendlyWidget,
+                            prefill: {
+                                name: data.name,
+                                email: data.email,
+                                customAnswers: {
+                                    a1: `Phone: ${data.phone}, Agency: ${data.agency}, Location: ${data.location}`
+                                }
+                            }
+                        });
+                    }
+                }
+                
+                // In production, you would also send the data to your server here
+                // Example: sendToServer(data);
+                
+            } else {
+                document.getElementById('pendingResult').classList.add('show');
+                // In production, you would also send the data to your server here
+                // Example: sendToWaitlist(data);
+            }
+        }
+        
+        function checkQualification(data) {
+            // Qualification logic
+            const qualifiedGCI = ['30-50k', '50k-plus'];
+            const qualifiedDatabase = ['2-4k', '4k-plus'];
+            
+            return qualifiedGCI.includes(data.gci) && qualifiedDatabase.includes(data.database);
+        }
+        
+        // Close modal when clicking outside
+        window.addEventListener('click', function(event) {
+            if (event.target === document.getElementById('qualificationModal')) {
+                closeModal();
+            }
         });
     </script>
 </body>
