@@ -1324,28 +1324,38 @@
             startDemo();
         }
 
-        // Set up Intersection Observer for hover trigger
+        // Set up Intersection Observer for auto-play
         function setupDemoObserver() {
             const demoSection = document.querySelector('.demo-section');
+            const iphoneContainer = document.querySelector('.iphone-container');
             
             demoObserver = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting && !hasPlayed) {
                         // Start demo when section is in view
-                        setTimeout(() => startDemo(), 500);
+                        setTimeout(() => {
+                            resetDemo();
+                            startDemo();
+                        }, 500);
                     }
                 });
             }, {
-                threshold: 0.5
+                threshold: 0.3, // Trigger when 30% visible
+                rootMargin: '0px 0px -100px 0px' // Trigger slightly before fully in view
             });
             
-            if (demoSection) {
-                demoObserver.observe(demoSection);
+            if (iphoneContainer) {
+                demoObserver.observe(iphoneContainer);
             }
         }
 
         // Initialize on page load
         window.addEventListener('load', () => {
+            setupDemoObserver();
+        });
+        
+        // Also initialize on DOMContentLoaded as backup
+        document.addEventListener('DOMContentLoaded', () => {
             setupDemoObserver();
         });
     </script>
