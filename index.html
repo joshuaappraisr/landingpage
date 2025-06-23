@@ -1772,81 +1772,103 @@ src="https://www.facebook.com/tr?id=693821290095821&ev=PageView&noscript=1"
             document.getElementById('qualificationForm').style.display = 'block';
             document.querySelectorAll('.qualification-result').forEach(el => el.classList.remove('show'));
             
-            // Clear any existing Calendly widget to prevent duplicates
-const calendlyContainer = document.querySelector('.calendly-inline-widget');
-if (calendlyContainer) {
-    calendlyContainer.innerHTML = '';
-    
-    // Map GCI and database values to readable format
-    const gciMap = {
-        'under-10k': 'Under $10,000',
-        '10-20k': '$10,000 - $20,000',
-        '20-30k': '$20,000 - $30,000',
-        '30-50k': '$30,000 - $50,000',
-        '50k-plus': '$50,000+'
-    };
-    
-    const databaseMap = {
-        'under-1k': 'Under 1,000',
-        '1-2k': '1,000 - 2,000',
-        '2-4k': '2,000 - 4,000',
-        '4k-plus': '4,000+'
-    };
-    
-    const typeMap = {
-        'agent': 'Individual Agent',
-        'agency': 'Agency Owner/Principal',
-        'team': 'Team Leader'
-    };
-    
-    // Format the qualification data
-    const qualificationData = {
-        phone: data.phone,
-        agency: data.agency,
-        location: data.location,
-        monthlyGCI: gciMap[data.gci] || data.gci,
-        databaseSize: databaseMap[data.database] || data.database,
-        agentType: typeMap[data.type] || data.type
-    };
-    
-    // Build custom questions string
-    const customQuestions = [
-        `Phone: ${qualificationData.phone}`,
-        `Agency: ${qualificationData.agency}`,
-        `Location: ${qualificationData.location}`,
-        `Monthly GCI: ${qualificationData.monthlyGCI}`,
-        `Database Size: ${qualificationData.databaseSize}`,
-        `Type: ${qualificationData.agentType}`
-    ].join(' | ');
-    
-    // Encode parameters for URL
-    const encodedName = encodeURIComponent(data.name);
-    const encodedEmail = encodeURIComponent(data.email);
-    const encodedPhone = encodeURIComponent(data.phone);
-    const encodedCustomQuestions = encodeURIComponent(customQuestions);
-    
-    // Build Calendly URL with all parameters
-    const calendlyUrl = `https://calendly.com/your-username/30min?hide_event_type_details=1&hide_gdpr_banner=1&name=${encodedName}&email=${encodedEmail}&phone=${encodedPhone}&a1=${encodedCustomQuestions}`;
-    
-    // Set the data-url attribute and reinitialize
-    calendlyContainer.setAttribute('data-url', calendlyUrl);
-    
-    // Load Calendly widget
-    if (window.Calendly) {
-        window.Calendly.initInlineWidget({
-            url: calendlyUrl,
-            parentElement: calendlyContainer,
-            prefill: {
-                name: data.name,
-                email: data.email,
-                phone: data.phone,
-                customAnswers: {
-                    a1: customQuestions
-                }
+            // Clear Calendly widget to prevent duplicates
+            const calendlyContainer = document.querySelector('.calendly-inline-widget');
+            if (calendlyContainer) {
+                calendlyContainer.innerHTML = '';
             }
-        });
-    }
-}
+            
+            // Reset to step 1
+            currentStep = 1;
+            showStep(1);
+        }
+        
+        function showStep(step) {
+            document.querySelectorAll('.form-step').forEach(el => {
+                el.style.display = 'none';
+            });
+            document.querySelector(`[data-step="${step}"]`).style.display = 'block';
+            
+            // Update buttons
+            document.getElementById('prevBtn').style.display = step > 1 ? 'block' : 'none';
+            document.getElementById('nextBtn').style.display = step < totalSteps ? 'block' : 'none';
+            document.getElementById('submitBtn').style.display = step === totalSteps ? 'block' : 'none';
+            
+            updateProgressBar();
+        }
+        
+        function changeStep(direction) {
+            const currentStepElement = document.querySelector(`[data-step="${currentStep}"]`);
+            const inputs = currentStepElement.querySelectorAll('input, select');
+            let isValid = true;
+            
+            // Validate current step before moving forward
+            if (direction > 0) {
+                inputs.forEach(input => {
+                    if (!input.checkValidity()) {
+                        input.reportValidity();
+                        isValid = false;
+                    }
+                });
+                
+                if (!isValid) return;
+            }
+            
+            currentStep += direction;
+            if (currentStep < 1) currentStep = 1;
+            if (currentStep > totalSteps) currentStep = totalSteps;
+            
+            showStep(currentStep);
+        }
+        
+        function updateProgressBar() {
+            const progress = (currentStep / totalSteps) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+        }
+        
+        function handleFormSubmit(event) {
+            event.preventDefault();
+            
+            const formData = new FormData(event.target);
+            const data = Object.fromEntries(formData);
+            
+            // Check qualification
+            const isQualified = checkQualification(data);
+            
+            // Hide form
+            document.getElementById('qualificationForm').style.display = 'none';
+            
+            // Show appropriate result
+            if (isQualified) {
+                document.getElementById('successResult').classList.add('show');
+                
+                // Clear any existing Calendly widget to prevent duplicates
+                const calendlyContainer = document.querySelector('.calendly-inline-widget');
+                if (calendlyContainer) {
+                    calendlyContainer.innerHTML = '';
+                    
+                    // Pre-fill Calendly with user data
+                    const encodedName = encodeURIComponent(data.name);
+                    const encodedEmail = encodeURIComponent(data.email);
+                    const customAnswers = encodeURIComponent(`Phone: ${data.phone}, Agency: ${data.agency}, Location: ${data.location}, GCI: ${data.gci}, Database: ${data.database}`);
+                    
+                    const calendlyUrl = `https://calendly.com/elias-appraisr/30min?hide_event_type_details=1&hide_gdpr_banner=1&name=${encodedName}&email=${encodedEmail}&a1=${customAnswers}`;
+                    
+                    // Initialize Calendly widget with new data
+                    if (window.Calendly) {
+                        window.Calendly.initInlineWidget({
+                            url: calendlyUrl,
+                            parentElement: calendlyContainer,
+                            prefill: {
+                                name: data.name,
+                                email: data.email,
+                                customAnswers: {
+                                    a1: `Phone: ${data.phone}, Agency: ${data.agency}, Location: ${data.location}`
+                                }
+                            }
+                        });
+                    }
+                }
                 
                 // In production, you would also send the data to your server here
                 // Example: sendToServer(data);
