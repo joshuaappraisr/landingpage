@@ -1,26 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
-    <!-- Meta Pixel Code -->
-<script>
-!function(f,b,e,v,n,t,s)
-{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-n.queue=[];t=b.createElement(e);t.async=!0;
-t.src=v;s=b.getElementsByTagName(e)[0];
-s.parentNode.insertBefore(t,s)}(window, document,'script',
-'https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', '693821290095821');
-fbq('track', 'PageView');
-</script>
-<noscript><img height="1" width="1" style="display:none"
-src="https://www.facebook.com/tr?id=693821290095821&ev=PageView&noscript=1"
-/></noscript>
-<!-- End Meta Pixel Code -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Appraisr AI - Custom AI Infrastructure for High-Performing Real Estate Teams</title>
+    
+    <!-- Meta Pixel Code -->
+    <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', 'YOUR_PIXEL_ID_HERE');
+    fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID_HERE&ev=PageView&noscript=1"
+    /></noscript>
+    <!-- End Meta Pixel Code -->
+    
     <style>
         * {
             margin: 0;
@@ -1712,8 +1714,8 @@ src="https://www.facebook.com/tr?id=693821290095821&ev=PageView&noscript=1"
                 <h3 style="color: #4caf50; margin-bottom: 15px;">🎉 Excellent! You Qualify!</h3>
                 <p style="margin-bottom: 20px;">You meet our criteria for the Appraisr AI infrastructure program. Let's discuss how to implement your custom AI agent and start generating 46+ listings every 60 days.</p>
                 
-                <!-- Calendly widget will be injected here dynamically -->
-<div id="calendly-container" style="min-width:320px;height:630px;margin-top:20px;"></div>
+                <!-- Calendly inline widget -->
+                <div class="calendly-inline-widget" data-url="https://calendly.com/elias-appraisr/30min?hide_event_type_details=1&hide_gdpr_banner=1" style="min-width:320px;height:630px;margin-top:20px;"></div>
                 <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
                 
                 <p style="margin-top: 20px; font-size: 0.9rem; color: #8e8e93;">
@@ -1756,6 +1758,13 @@ src="https://www.facebook.com/tr?id=693821290095821&ev=PageView&noscript=1"
             currentStep = 1;
             showStep(1);
             updateProgressBar();
+            
+            // Track Meta Pixel event
+            if (typeof fbq !== 'undefined') {
+                fbq('track', 'Lead', {
+                    value: 'qualification_form_opened'
+                });
+            }
         }
         
         function closeModal() {
@@ -1841,51 +1850,37 @@ src="https://www.facebook.com/tr?id=693821290095821&ev=PageView&noscript=1"
                     calendlyContainer.innerHTML = '';
                     
                     // Pre-fill Calendly with user data
-                    const calendlyContainer = document.querySelector('.calendly-inline-widget');
-if (isQualified) {
-    document.getElementById('successResult').classList.add('show');
-    // Dynamically inject Calendly ONLY if user qualifies
-    const calendlyContainer = document.getElementById('calendly-container');
-    calendlyContainer.innerHTML = ""; // clear any previous content
-
-    const calendlyUrl =
-        `https://calendly.com/elias-appraisr/30min?hide_event_type_details=1&hide_gdpr_banner=1` +
-        `&name=${encodeURIComponent(data.name)}` +
-        `&email=${encodeURIComponent(data.email)}` +
-        `&a1=${encodeURIComponent(data.phone)}` +
-        `&a2=${encodeURIComponent(data.agency)}` +
-        `&a3=${encodeURIComponent(data.location)}` +
-        `&a4=${encodeURIComponent(data.gci)}` +
-        `&a5=${encodeURIComponent(data.database)}` +
-        `&a6=${encodeURIComponent(data.type)}`;
-
-    // Function to load Calendly widget
-    function loadCalendlyWidget() {
-        if (window.Calendly && window.Calendly.initInlineWidget) {
-            window.Calendly.initInlineWidget({
-                url: calendlyUrl,
-                parentElement: calendlyContainer,
-            });
-        } else {
-            // Calendly script may not be loaded yet
-            const script = document.createElement('script');
-            script.src = "https://assets.calendly.com/assets/external/widget.js";
-            script.async = true;
-            script.onload = () => {
-                window.Calendly.initInlineWidget({
-                    url: calendlyUrl,
-                    parentElement: calendlyContainer,
-                });
-            };
-            document.body.appendChild(script);
+                    const encodedName = encodeURIComponent(data.name);
+                    const encodedEmail = encodeURIComponent(data.email);
+                    const customAnswers = encodeURIComponent(`Phone: ${data.phone}, Agency: ${data.agency}, Location: ${data.location}, GCI: ${data.gci}, Database: ${data.database}`);
+                    
+                    const calendlyUrl = `https://calendly.com/elias-appraisr/30min?hide_event_type_details=1&hide_gdpr_banner=1&name=${encodedName}&email=${encodedEmail}&a1=${customAnswers}`;
+                    
+                    // Initialize Calendly widget with new data
+                    if (window.Calendly) {
+                        window.Calendly.initInlineWidget({
+                            url: calendlyUrl,
+                            parentElement: calendlyContainer,
+                            prefill: {
+                                name: data.name,
+                                email: data.email,
+                                customAnswers: {
+                                    a1: `Phone: ${data.phone}, Agency: ${data.agency}, Location: ${data.location}`
+                                }
+                            }
+                        });
+                    }
+                }
+                
+                // In production, you would also send the data to your server here
+                // Example: sendToServer(data);
+                
+            } else {
+                document.getElementById('pendingResult').classList.add('show');
+                // In production, you would also send the data to your server here
+                // Example: sendToWaitlist(data);
+            }
         }
-    }
-    loadCalendlyWidget();
-} else {
-    document.getElementById('pendingResult').classList.add('show');
-    // Optionally: send unqualified leads to your waitlist backend here.
-}
-
         
         function checkQualification(data) {
             // Qualification logic
