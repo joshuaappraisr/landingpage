@@ -714,36 +714,258 @@
         
         @media (max-width: 768px) {
             h1 {
-                font-size: 2.5rem;
+                font-size: 2rem;
+                line-height: 1.2;
+                letter-spacing: -1px;
             }
             
             h2 {
-                font-size: 2rem;
+                font-size: 1.8rem;
+                line-height: 1.2;
+            }
+            
+            .subheadline {
+                font-size: 1.1rem;
+                padding: 0 10px;
+            }
+            
+            .hero {
+                padding: 60px 0 50px;
+            }
+            
+            .section {
+                padding: 60px 0;
             }
             
             .stats-wrapper {
                 grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+            
+            .stat-card {
+                padding: 20px 15px;
+            }
+            
+            .stat-number {
+                font-size: 2rem;
+            }
+            
+            .stat-label {
+                font-size: 0.75rem;
             }
             
             .methodology-grid {
                 grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .methodology-card {
+                padding: 30px 20px;
             }
             
             .case-study-content {
                 grid-template-columns: 1fr;
-                gap: 30px;
+                gap: 20px;
+                padding: 30px 20px;
+            }
+            
+            .case-metric-number {
+                font-size: 2.5rem;
             }
             
             .iphone-container {
-                max-width: 350px;
+                max-width: 320px;
+                margin: 40px auto;
             }
             
             .iphone-screen {
-                height: 600px;
+                height: 550px;
             }
             
             .messages-container {
-                height: 480px;
+                height: 420px;
+            }
+            
+            .demo-scenarios {
+                gap: 10px;
+            }
+            
+            .scenario-button {
+                padding: 10px 20px;
+                font-size: 0.85rem;
+            }
+            
+            /* Mobile-optimized CTAs */
+            .cta-button {
+                font-size: 1rem;
+                padding: 18px 30px;
+                width: 100%;
+                max-width: 320px;
+                margin: 10px auto;
+                display: block;
+                box-shadow: 0 15px 35px rgba(255, 107, 53, 0.4);
+            }
+            
+            .cta-button-secondary {
+                margin-top: 15px;
+            }
+            
+            .cta-wrapper {
+                padding: 0 20px;
+            }
+            
+            /* Sticky mobile CTA */
+            .mobile-sticky-cta {
+                display: block;
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                background: linear-gradient(to top, #1a1f36 80%, transparent);
+                padding: 20px 20px 30px;
+                z-index: 100;
+                backdrop-filter: blur(10px);
+            }
+            
+            .mobile-sticky-cta .cta-button {
+                margin: 0;
+                font-size: 1.1rem;
+                animation: pulse 2s infinite;
+            }
+            
+            /* iOS-style modal */
+            .modal-content {
+                padding: 30px 20px;
+                margin: 20px;
+                border-radius: 20px;
+                max-height: 85vh;
+            }
+            
+            .form-input,
+            .form-select {
+                font-size: 16px; /* Prevents zoom on iOS */
+                padding: 18px 15px;
+            }
+            
+            /* Insight box mobile */
+            .insight-box {
+                margin: 20px;
+                padding: 20px;
+                font-size: 0.95rem;
+            }
+            
+            /* Tech showcase mobile */
+            .tech-showcase > div > div > div {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            
+            /* Qualification criteria mobile */
+            .qualification-criteria {
+                margin: 20px;
+                padding: 30px 20px;
+            }
+            
+            .roi-teaser {
+                padding: 30px 20px;
+                margin: 20px;
+            }
+            
+            /* Footer CTA mobile */
+            .final-cta p {
+                font-size: 1.1rem;
+                padding: 0 20px;
+            }
+        }
+        
+        /* Pulse animation for CTAs */
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 15px 35px rgba(255, 107, 53, 0.4);
+            }
+            50% {
+                transform: scale(1.02);
+                box-shadow: 0 20px 45px rgba(255, 107, 53, 0.6);
+            }
+            100% {
+                transform: scale(1);
+                box-shadow: 0 15px 35px rgba(255, 107, 53, 0.4);
+            }
+        }
+        
+        /* Touch-friendly improvements */
+        @media (hover: none) and (pointer: coarse) {
+            .cta-button {
+                -webkit-tap-highlight-color: rgba(255, 107, 53, 0.2);
+                touch-action: manipulation;
+            }
+            
+            .scenario-button,
+            .demo-button,
+            .form-submit {
+                -webkit-tap-highlight-color: transparent;
+                touch-action: manipulation;
+            }
+        }
+        
+        /* iOS safe areas */
+        @supports (padding-bottom: env(safe-area-inset-bottom)) {
+            .mobile-sticky-cta {
+                padding-bottom: calc(20px + env(safe-area-inset-bottom));
+            }
+        }
+        
+        /* Mobile-first stat cards with better visual hierarchy */
+        @media (max-width: 768px) {
+            .stat-card {
+                background: rgba(255, 107, 53, 0.05);
+                border: 2px solid rgba(255, 107, 53, 0.3);
+                position: relative;
+                overflow: hidden;
+            }
+            
+            .stat-card::before {
+                content: '';
+                position: absolute;
+                top: -50%;
+                right: -50%;
+                width: 100%;
+                height: 100%;
+                background: radial-gradient(circle, rgba(255, 107, 53, 0.1) 0%, transparent 70%);
+                animation: float 3s ease-in-out infinite;
+            }
+            
+            @keyframes float {
+                0%, 100% { transform: translate(0, 0); }
+                50% { transform: translate(-20px, -20px); }
+            }
+        }
+        .mobile-social-proof {
+            display: none;
+        }
+        
+        @media (max-width: 768px) {
+            .mobile-social-proof {
+                display: block;
+                background: #fff3cd;
+                padding: 15px;
+                text-align: center;
+                font-size: 0.9rem;
+                border-bottom: 2px solid #FF6B35;
+                position: sticky;
+                top: 0;
+                z-index: 50;
+                animation: slideDown 0.5s ease-out;
+            }
+        }
+        
+        @keyframes slideDown {
+            from {
+                transform: translateY(-100%);
+            }
+            to {
+                transform: translateY(0);
             }
         }
         
@@ -903,6 +1125,10 @@
     </style>
 </head>
 <body>
+    <!-- Mobile Social Proof Banner -->
+    <div class="mobile-social-proof">
+        🔥 <strong>3 agents</strong> in Melbourne just activated their AI this week
+    </div>
 
     <div class="hero">
         <div class="container">
@@ -931,8 +1157,11 @@
                 </div>
                 
                 <div class="cta-wrapper">
-                    <a href="#" class="cta-button">Unlock Hidden GCI Now →</a>
-                    <a href="#" class="cta-button cta-button-secondary" style="margin-left: 20px;">See If Your Database Qualifies</a>
+                    <a href="#" class="cta-button">Unlock Your Hidden GCI Now</a>
+                    <a href="#" class="cta-button cta-button-secondary" style="margin-left: 0;">See If Your Database Qualifies</a>
+                    <p style="text-align: center; margin-top: 20px; font-size: 14px; color: #f7f9fc; opacity: 0.7;">
+                        <strong>Limited spots available</strong> — We only partner with one agent per area
+                    </p>
                 </div>
             </div>
         </div>
@@ -1037,15 +1266,15 @@
             </p>
             
             <div style="text-align: center; margin-top: 40px;">
-                <p style="font-size: 1.3rem; font-weight: 700; color: #1a1f36; margin-bottom: 20px;">
-                    Want Your Own AI That Sounds Exactly Like You?
+                <p style="font-size: 20px; font-weight: 600; color: #1a1f36; margin-bottom: 15px;">
+                    Want your own AI that books appointments like this?
                 </p>
-                <p style="font-size: 1.1rem; color: #2e2e3a; margin-bottom: 30px; max-width: 600px; margin-left: auto; margin-right: auto;">
-                    Stop watching demos. Start watching your calendar fill with qualified appointments while you sleep.
+                <p style="font-size: 16px; color: #6e6e73; margin-bottom: 25px; max-width: 500px; margin-left: auto; margin-right: auto;">
+                    Stop watching demos. Start watching your calendar fill with qualified appointments.
                 </p>
-                <a href="#" class="cta-button">Get Your AI Agent Working Today →</a>
-                <p style="font-size: 0.9rem; color: #8e8e93; margin-top: 15px;">
-                    <strong>Limited spots available</strong> — We only partner with one agent per area
+                <a href="#" class="cta-button">Get Your AI Agent Working</a>
+                <p style="font-size: 14px; color: #8e8e93; margin-top: 15px;">
+                    <strong>Limited availability</strong> — One agent per area only
                 </p>
             </div>
         </div>
@@ -1120,7 +1349,10 @@
             </p>
             
             <div class="cta-wrapper">
-                <a href="#" class="cta-button">Activate Your Database Now →</a>
+                <a href="#" class="cta-button">Reactivate Your Database Today</a>
+                <p style="text-align: center; margin-top: 15px; font-size: 14px; color: #6e6e73;">
+                    Turn dormant contacts into active listings with AI
+                </p>
             </div>
         </div>
     </section>
@@ -1177,14 +1409,14 @@
             <p>Stop letting listings die in your CRM. Build an AI agent that works your database 24/7, books appointments while you sleep, and sounds exactly like you at your best.</p>
             
             <p style="font-size: 1.3rem; margin: 40px auto; max-width: 700px;">
-                During your consultation, we'll analyze your database, show you the AI in action on real leads, and calculate exactly how many dormant listings you're sitting on.
+                In our 30-minute strategy call, we'll show you exactly how many dormant opportunities are hiding in your database and demonstrate your custom AI agent live.
             </p>
             
-            <a href="#" class="cta-button" style="font-size: 1.2rem; padding: 25px 60px;">Book Your AI Strategy Session →</a>
-            <p class="small-text" style="color: #e5e9f2;">See your custom AI agent in action.</p>
+            <a href="#" class="cta-button" style="font-size: 1.2rem; padding: 25px 60px;">Book Your Strategy Call Now</a>
+            <p class="small-text" style="color: #e5e9f2;">Applications close Friday at 5pm</p>
             
             <p style="margin-top: 80px; font-size: 1rem; opacity: 0.7; color: #e5e9f2; max-width: 600px; margin-left: auto; margin-right: auto;">
-                Note: We partner with one agent per area (LGA) to ensure market exclusivity. Currently accepting applications in select areas. Limited availability.<br>Real estate agents only.
+                Note: We only partner with one agent per LGA. First approved application secures exclusive area rights.<br>Real estate agents only.
             </p>
         </div>
     </div>
@@ -1448,27 +1680,28 @@
             
             <!-- Results -->
             <div class="qualification-result result-success" id="successResult">
-                <h3 style="color: #4caf50; margin-bottom: 15px;">🎉 Congratulations! You Qualify!</h3>
-                <p style="margin-bottom: 20px;">Based on your responses, you're a perfect fit for Appraisr AI infrastructure. Let's schedule a time to show you exactly how we can help you generate 46+ listings every 60 days.</p>
+                <h3 style="color: #4caf50; margin-bottom: 15px;">🎉 Excellent! You Qualify!</h3>
+                <p style="margin-bottom: 20px;">You meet our criteria for the Appraisr AI infrastructure programme. Let's discuss how to implement your custom AI agent and start generating 46+ listings every 60 days.</p>
                 
                 <!-- Calendly inline widget -->
                 <div class="calendly-inline-widget" data-url="https://calendly.com/elias-appraisr/30min?hide_event_type_details=1&hide_gdpr_banner=1" style="min-width:320px;height:630px;margin-top:20px;"></div>
                 <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
                 
                 <p style="margin-top: 20px; font-size: 0.9rem; color: #8e8e93;">
-                    Can't find a time that works? <a href="mailto:contact@appraisr.com.au" style="color: #FF6B35;">Email us directly</a>
+                    Spots are filling fast. If no times work, <a href="mailto:priority@appraisr.com.au" style="color: #FF6B35;">email us for priority access</a>
                 </p>
             </div>
             
             <div class="qualification-result result-pending" id="pendingResult">
-                <h3 style="color: #FF6B35; margin-bottom: 15px;">Thank You for Your Interest!</h3>
-                <p>While you don't meet our current qualification criteria, we're always evolving our offerings. We'll keep your information on file and reach out when we have solutions that match your needs.</p>
+                <h3 style="color: #FF6B35; margin-bottom: 15px;">Thank You for Your Interest</h3>
+                <p>Based on your current metrics, you don't meet our minimum criteria yet. We only work with established agents who can maximise the ROI from our AI infrastructure.</p>
                 <p style="margin-top: 20px;">
-                    <strong>What happens next:</strong><br>
-                    • We'll review your application within 24 hours<br>
-                    • If circumstances change, we'll reach out immediately<br>
-                    • You'll receive our monthly AI insights newsletter
+                    <strong>You need:</strong><br>
+                    • Monthly GCI of $30,000+<br>
+                    • Database of 2,000+ contacts<br>
+                    • Commitment to being the exclusive Appraisr agent in your area
                 </p>
+                <p style="margin-top: 20px; font-style: italic;">We'll keep your details on file and reach out when you qualify.</p>
             </div>
         </div>
     </div>
